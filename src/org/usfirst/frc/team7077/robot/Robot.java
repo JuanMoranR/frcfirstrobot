@@ -54,7 +54,6 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		
 		}
-	}
 	/**
 	 * This function is called periodically during operator control.
 	 */
