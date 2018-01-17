@@ -25,6 +25,7 @@ public class Robot extends IterativeRobot {
 	private XboxController m_controller;
 
 	public void robotInit() {
+		//Spark 0 and 1 are drive motors, 0 is 2 left side 1 is 2 right side.
 		m_myRobot = new DifferentialDrive(new Spark(0), new Spark(2));
 		//m_leftStick = new Joystick(0); //Use this and bottom when using TWO joysticks
 		//m_rightStick = new Joystick(1);
@@ -32,7 +33,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopPeriodic() {
-		m_myRobot.tankDrive(m_controller.getY(Hand.kRight), m_controller.getY(Hand.kLeft));
-		//m_myRobot.tankDrive(m_leftStick.getY(), m_rightStick.getY());
+		m_myRobot.tankDrive(m_controller.getY(Hand.kRight), m_controller.getY(Hand.kLeft)); //Use this when using one controller
+		//m_myRobot.tankDrive(m_leftStick.getY(), m_rightStick.getY()); //Use this when using TWO joysticks
 	}
 }
