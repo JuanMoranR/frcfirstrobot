@@ -20,9 +20,13 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  */
 public class Robot extends IterativeRobot {
 	private DifferentialDrive m_myRobot;
+	private DifferentialDrive m_myBelt; //Use if doing conveyor belt system
+	private DifferentialDrive m_myRollers; //The wheels that suck box into system
 	//private Joystick m_leftStick;
 	//private Joystick m_rightStick;
 	private XboxController m_controller;
+	private static final int kMotorPortLeft = 0;
+	private static final int kMotorPortRight = 1;
 
 	public void robotInit() {
 		//Spark 0 and 1 are drive motors, 0 is 2 left side 1 is 2 right side.
