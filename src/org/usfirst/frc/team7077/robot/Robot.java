@@ -25,15 +25,20 @@ public class Robot extends IterativeRobot {
 	//private Joystick m_leftStick;
 	//private Joystick m_rightStick;
 	private XboxController m_controller;
-	private static final int kMotorPortLeft = 0;
-	private static final int kMotorPortRight = 1;
+	
+	private static final int kMotorPortLeft = 0; //Change this to whatever the left motor port is on
+	private static final int kMotorPortRight = 1; //Change this to whatever the right motor port is on
+	
+	private static final int kJoystickPortLeft = 0; //Change this to whatever the left joystick port is on
+	private static final int kJoystickPortRight = 1; //Change this to whatever the right joystick port is on
+	private static final int kControllerPort = 0; //Change this to whatever the ONE controller port is on
 
 	public void robotInit() {
 		//Spark 0 and 1 are drive motors, 0 is 2 left side 1 is 2 right side.
-		m_myRobot = new DifferentialDrive(new Spark(0), new Spark(2));
-		//m_leftStick = new Joystick(0); //Use this and bottom when using TWO joysticks
-		//m_rightStick = new Joystick(1);
-		m_controller = new XboxController(0); //Use this when using single controller
+		m_myRobot = new DifferentialDrive(new Spark(kMotorPortLeft), new Spark(kMotorPortRight));
+		//m_leftStick = new Joystick(kJoystickPortLeft); //Use this and bottom when using TWO joysticks
+		//m_rightStick = new Joystick(kJoystickPortRight);
+		m_controller = new XboxController(kControllerPort); //Use this when using single controller
 	}
 
 	public void teleopPeriodic() {
