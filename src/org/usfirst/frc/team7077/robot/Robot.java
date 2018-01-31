@@ -32,6 +32,8 @@ public class Robot extends IterativeRobot {
 	private static final int kJoystickPortLeft = 0; //Change this to whatever the left joystick port is on
 	private static final int kJoystickPortRight = 1; //Change this to whatever the right joystick port is on
 	private static final int kControllerPort = 0; //Change this to whatever the ONE controller port is on
+	
+	
 
 	public void robotInit() {
 		//Spark 0 and 1 are drive motors, 0 is 2 left side 1 is 2 right side.
