@@ -44,6 +44,39 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopPeriodic() {
+		/** 
+		* WIP for DPAD speed toggle (slow, medium, fast, all out)
+		* Have two if else statements, one that outputs a number between 0 and 3
+		* Depending on which DPAD button is pressed
+		* Where 0 is the slowest and 3 is the fastest
+		* The next if else checks the number set in the first statement and
+		* Sets the max speed to slow or fast
+		* What follows is pseudocode
+		if (button pressed == left dpad)
+			speed = 0;
+		else if (button pressed = up dpad)
+			speed = 1;
+		else if (button pressed = right dpad)
+			speed = 2;
+		else if (button pressed = down dpad)
+			speed = 3;
+			
+		switch(speed)
+		{
+			case 0:
+				set robot tank drive to slow;
+			case 1:
+				set robot tank drive to medium;
+			case 2:
+				set robot tank drive to fast;
+			case 3:
+				m_myRobot.tankDrive(m_controller.getY(Hand.kRight), m_controller.getY(Hand.kLeft));
+			default:
+				System.out.println("Somethings wrong, speed variable isnt set");
+				
+		*/
+			
+		
 		m_myRobot.tankDrive(m_controller.getY(Hand.kRight), m_controller.getY(Hand.kLeft)); //Use this when using one controller
 		//m_myRobot.tankDrive(m_leftStick.getY(), m_rightStick.getY()); //Use this when using TWO joysticks
 	}
