@@ -28,8 +28,8 @@ public class Robot extends IterativeRobot {
 	private XboxController m_controller;
 	
 	//Talons for intake wheels
-	Talon m_frontLeft = new Talon(1);
-	Talon m_frontRight = new Talon(2);
+	Talon m_frontLeft = new Talon(2);
+	Talon m_frontRight = new Talon(3);
 	SpeedControllerGroup m_left = new SpeedControllerGroup(m_frontLeft);
 	SpeedControllerGroup m_right = new SpeedControllerGroup(m_frontRight);
 	
@@ -90,5 +90,7 @@ public class Robot extends IterativeRobot {
 		m_myRobot.tankDrive(m_controller.getY(Hand.kRight), m_controller.getY(Hand.kLeft)); //Use this when using one controller
 		//System.out.println(m_controller.getY(Hand.kRight));
 		//m_myRobot.tankDrive(m_leftStick.getY(), m_rightStick.getY()); //Use this when using TWO joysticks
+		m_frontLeft.set(m_controller.getRawAxis(3));
+		System.out.println(m_frontLeft);
 	}
 }
