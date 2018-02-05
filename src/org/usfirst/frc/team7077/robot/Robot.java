@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -21,11 +23,18 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class Robot extends IterativeRobot {
 	private DifferentialDrive m_myRobot;
-	private DifferentialDrive m_myBelt; //Use if doing conveyor belt system
-	private DifferentialDrive m_myRollers; //The wheels that suck box into system
 	//private Joystick m_leftStick;
 	//private Joystick m_rightStick;
 	private XboxController m_controller;
+	
+	//Talons for intake wheels
+	Talon m_frontLeft = new Talon(1);
+	Talon m_frontRight = new Talon(2);
+	SpeedControllerGroup m_left = new SpeedControllerGroup(m_frontLeft);
+	SpeedControllerGroup m_right = new SpeedControllerGroup(m_frontRight);
+	
+	DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
+	
 	
 	private static final int kMotorPortLeft = 0; //Change this to whatever the left motor port is on
 	private static final int kMotorPortRight = 1; //Change this to whatever the right motor port is on
@@ -79,7 +88,7 @@ public class Robot extends IterativeRobot {
 			
 		
 		m_myRobot.tankDrive(m_controller.getY(Hand.kRight), m_controller.getY(Hand.kLeft)); //Use this when using one controller
-		System.out.println(m_controller.getY(Hand.kRight));
+		//System.out.println(m_controller.getY(Hand.kRight));
 		//m_myRobot.tankDrive(m_leftStick.getY(), m_rightStick.getY()); //Use this when using TWO joysticks
 	}
 }
