@@ -61,19 +61,27 @@ public class Robot extends IterativeRobot {
 		* The next if else checks the number set in the first statement and
 		* Sets the max speed to slow or fast
 		* What follows is pseudocode
-		if (button pressed == left dpad)
+		*/
+		int speed = 3;
+		if (m_controller.getXButton() == true)
 			speed = 0;
-		else if (button pressed = up dpad)
+		if (m_controller.getYButton() == true)
 			speed = 1;
-		else if (button pressed = right dpad)
+		if (m_controller.getBButton() == true)
 			speed = 2;
-		else if (button pressed = down dpad)
+		if (m_controller.getAButton() == true)
 			speed = 3;
 			
 		switch(speed)
 		{
 			case 0:
-				set robot tank drive to slow;
+				if (m_controller.getY(Hand.kLeft) == 1)
+					m_myRobot.tankDrive(0.25, 0);
+				if (m_controller.getY(Hand.kRight) == 1)
+					m_myRobot.tankDrive(0, 0.25);
+				if (m_controller.getY(Hand.kLeft) == 1 && m_controller.getY(Hand.kRight) == 1)
+					m_myRobot.tankDrive(0.25, 0.25);
+				
 			case 1:
 				set robot tank drive to medium;
 			case 2:
@@ -82,8 +90,7 @@ public class Robot extends IterativeRobot {
 				m_myRobot.tankDrive(m_controller.getY(Hand.kRight), m_controller.getY(Hand.kLeft));
 			default:
 				System.out.println("Somethings wrong, speed variable isnt set");
-				
-		*/
+		}
 			
 		
 		m_myRobot.tankDrive(m_controller.getY(Hand.kRight), m_controller.getY(Hand.kLeft)); //Use this when using one controller
