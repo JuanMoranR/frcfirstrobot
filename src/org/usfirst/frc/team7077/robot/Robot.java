@@ -27,17 +27,16 @@ public class Robot extends IterativeRobot {
 	//private Joystick m_rightStick;
 	private XboxController m_controller;
 	
+	private static final int kMotorPortLeft = 0; //Change this to whatever the left motor port is on
+	private static final int kMotorPortRight = 1; //Change this to whatever the right motor port is on
+	
 	//Talons for intake wheels
 	Talon m_frontLeft = new Talon(2);
 	Talon m_frontRight = new Talon(3);
 	SpeedControllerGroup m_left = new SpeedControllerGroup(m_frontLeft);
 	SpeedControllerGroup m_right = new SpeedControllerGroup(m_frontRight);
-	
+			
 	DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
-	
-	
-	private static final int kMotorPortLeft = 0; //Change this to whatever the left motor port is on
-	private static final int kMotorPortRight = 1; //Change this to whatever the right motor port is on
 	
 	private static final int kJoystickPortLeft = 0; //Change this to whatever the left joystick port is on
 	private static final int kJoystickPortRight = 1; //Change this to whatever the right joystick port is on
@@ -90,6 +89,10 @@ public class Robot extends IterativeRobot {
 		m_myRobot.tankDrive(m_controller.getY(Hand.kRight), m_controller.getY(Hand.kLeft)); //Use this when using one controller
 		//System.out.println(m_controller.getY(Hand.kRight));
 		//m_myRobot.tankDrive(m_leftStick.getY(), m_rightStick.getY()); //Use this when using TWO joysticks
+		if (m_controller.getPOV()==0)
+			m_myRobot.tankDrive(-1,-1);
+		if (m_controller.getPOV()==180)
+			m_myRobot.tankDrive(1, 1);
 		m_frontLeft.set(m_controller.getRawAxis(3));
 		System.out.println(m_frontLeft);
 	}
