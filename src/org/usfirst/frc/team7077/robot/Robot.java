@@ -51,7 +51,6 @@ public class Robot extends IterativeRobot {
 
 	public void teleopPeriodic() {
 		
-		/*
 		int speed = 3;
 		if (m_controller.getXButton() == true)
 			speed = 0;
@@ -71,45 +70,45 @@ public class Robot extends IterativeRobot {
 					m_myRobot.tankDrive(-0.25,-0.25);
 				if (m_controller.getPOV()==180)
 					m_myRobot.tankDrive(0.25, 0.25);
-				if (m_controller.getY(Hand.kLeft) == 1)
+				if (m_controller.getY(Hand.kLeft) >= 0.5)
 					m_myRobot.tankDrive(-0.25, 0);
-				if (m_controller.getY(Hand.kRight) == 1)
+				if (m_controller.getY(Hand.kRight) >= 0.5)
 					m_myRobot.tankDrive(0, -0.25);
-				if (m_controller.getY(Hand.kLeft) == 1 && m_controller.getY(Hand.kRight) == 1)
+				if (m_controller.getY(Hand.kLeft) >= 0.5 && m_controller.getY(Hand.kRight) >= 0.5)
 					m_myRobot.tankDrive(-0.25, -0.25);
-				if (m_controller.getY(Hand.kLeft) == -1)
+				if (m_controller.getY(Hand.kLeft) <= -0.5)
 					m_myRobot.tankDrive(0.25, 0);
-				if (m_controller.getY(Hand.kRight) == -1)
+				if (m_controller.getY(Hand.kRight) <= -0.5)
 					m_myRobot.tankDrive(0, 0.25);
-				if (m_controller.getY(Hand.kLeft) == -1 && m_controller.getY(Hand.kRight) == -1)
+				if (m_controller.getY(Hand.kLeft) <= -0.5 && m_controller.getY(Hand.kRight) <= -0.5)
 					m_myRobot.tankDrive(0.25, 0.25);
 			case 1:
 				if (m_controller.getPOV()==0)
 					m_myRobot.tankDrive(-0.5,-0.5);
 				if (m_controller.getPOV()==180)
 					m_myRobot.tankDrive(0.5, 0.5);
-				if (m_controller.getY(Hand.kLeft) == 1)
+				if (m_controller.getY(Hand.kLeft) >= 0.5)
 					m_myRobot.tankDrive(-0.5, 0);
-				if (m_controller.getY(Hand.kRight) == 1)
+				if (m_controller.getY(Hand.kRight) >= 0.5)
 					m_myRobot.tankDrive(0, -0.5);
-				if (m_controller.getY(Hand.kLeft) == 1 && m_controller.getY(Hand.kRight) == 1)
+				if (m_controller.getY(Hand.kLeft) >= 0.5 && m_controller.getY(Hand.kRight) >= 0.5)
 					m_myRobot.tankDrive(-0.5, -0.5);
-				if (m_controller.getY(Hand.kLeft) == -1)
+				if (m_controller.getY(Hand.kLeft) <= -0.5)
 					m_myRobot.tankDrive(0.5, 0);
-				if (m_controller.getY(Hand.kRight) == -1)
+				if (m_controller.getY(Hand.kRight) <= -0.5)
 					m_myRobot.tankDrive(0, 0.5);
-				if (m_controller.getY(Hand.kLeft) == -1 && m_controller.getY(Hand.kRight) == -1)
+				if (m_controller.getY(Hand.kLeft) <= -0.5 && m_controller.getY(Hand.kRight) <= -0.5)
 					m_myRobot.tankDrive(0.5, 0.5);
 			case 2:
 				if (m_controller.getPOV()==0)
 					m_myRobot.tankDrive(-0.75,-0.75);
 				if (m_controller.getPOV()==180)
 					m_myRobot.tankDrive(0.75, 0.75);
-				if (m_controller.getY(Hand.kLeft) == 1)
+				if (m_controller.getY(Hand.kLeft) >= 0.5)
 					m_myRobot.tankDrive(-0.75, 0);
-				if (m_controller.getY(Hand.kRight) == 1)
+				if (m_controller.getY(Hand.kRight) >= 0.5)
 					m_myRobot.tankDrive(0, -0.75);
-				if (m_controller.getY(Hand.kLeft) == 1 && m_controller.getY(Hand.kRight) == 1)
+				if (m_controller.getY(Hand.kLeft) >= 0.5 && m_controller.getY(Hand.kRight) == 1)
 					m_myRobot.tankDrive(-0.75, -0.75);
 				if (m_controller.getY(Hand.kLeft) == -1)
 					m_myRobot.tankDrive(0.75, 0);
@@ -118,79 +117,34 @@ public class Robot extends IterativeRobot {
 				if (m_controller.getY(Hand.kLeft) == -1 && m_controller.getY(Hand.kRight) == -1)
 					m_myRobot.tankDrive(0.75, 0.75);
 			case 3:
+				if (m_controller.getTriggerAxis(Hand.kLeft)>=0.1)
+					m_myRobot.tankDrive(m_controller.getY(Hand.kLeft), m_controller.getY(Hand.kRight));
 				m_myRobot.tankDrive(m_controller.getY(Hand.kRight), m_controller.getY(Hand.kLeft));
-				if (m_controller.getBumper(Hand.kLeft) == true)
-					m_arm.set(0.7);
-				if (m_controller.getBumper(Hand.kRight) == true)
-					m_arm.set(-0.7);
+				if (m_controller.getPOV()==0)
+					m_myRobot.tankDrive(-1,-1);
+				if (m_controller.getPOV()==180)
+					m_myRobot.tankDrive(1, 1);
+				if (m_controller.getPOV()==90)
+					m_myRobot.tankDrive(-1, 1);
+				if (m_controller.getPOV()==270)
+					m_myRobot.tankDrive(1, -1);
+				if (m_controller.getBumperPressed(Hand.kLeft) == true)
+					m_arm.set(0.9);
+				if (m_controller.getBumperReleased(Hand.kLeft) == true)
+					m_arm.set(0);
+				if (m_controller.getBumperPressed(Hand.kRight) == true)
+					m_arm.set(-0.4);
+				if (m_controller.getBumperReleased(Hand.kRight) == true)
+					m_arm.set(0);
+				m_frontLeft.set(m_controller.getRawAxis(3));
 			default:
 				System.out.println("Somethings wrong, speed variable isnt set");
 		}
 		}
-		else if (controllerType == 1)
-		{
-			switch(speed)
-		{
-			case(0):
-			{
-				//if (m_leftStick.getPOV()==0)
-				//	m_myRobot.tankDrive(-0.25,-0.25);
-				//if (m_leftStick.getPOV()==180)
-				//	m_myRobot.tankDrive(0.25, 0.25);
-				if (m_leftStick.getY() == 1)
-					m_myRobot.tankDrive(-0.25, 0);
-				if (m_rightStick.getY() == 1)
-					m_myRobot.tankDrive(0, -0.25);
-				if (m_leftStick.getY() == 1 && m_rightStick.getY() == 1)
-					m_myRobot.tankDrive(-0.25, -0.25);
-				if (m_leftStick.getY() == -1)
-					m_myRobot.tankDrive(0.25, 0);
-				if (m_rightStick.getY() == -1)
-					m_myRobot.tankDrive(0, 0.25);
-				if (m_leftStick.getY() == -1 && m_rightStick.getY() == -1)
-					m_myRobot.tankDrive(0.25, 0.25);
-			}
-			case(1):
-			{
-				if (m_leftStick.getY() == 1)
-					m_myRobot.tankDrive(-0.5, 0);
-				if (m_rightStick.getY() == 1)
-					m_myRobot.tankDrive(0, -0.5);
-				if (m_leftStick.getY() == 1 && m_rightStick.getY() == 1)
-					m_myRobot.tankDrive(-0.5, -0.5);
-				if (m_leftStick.getY() == -1)
-					m_myRobot.tankDrive(0.5, 0);
-				if (m_rightStick.getY() == -1)
-					m_myRobot.tankDrive(0, 0.5);
-				if (m_leftStick.getY() == -1 && m_rightStick.getY() == -1)
-					m_myRobot.tankDrive(0.5, 0.5);
-			}
-			case(2):
-			{
-				if (m_leftStick.getY() == 1)
-					m_myRobot.tankDrive(-0.75, 0);
-				if (m_rightStick.getY() == 1)
-					m_myRobot.tankDrive(0, -0.75);
-				if (m_leftStick.getY() == 1 && m_rightStick.getY() == 1)
-					m_myRobot.tankDrive(-0.75, -0.75);
-				if (m_leftStick.getY() == -1)
-					m_myRobot.tankDrive(0.75, 0);
-				if (m_rightStick.getY() == -1)
-					m_myRobot.tankDrive(0, 0.75);
-				if (m_leftStick.getY() == -1 && m_rightStick.getY() == -1)
-					m_myRobot.tankDrive(0.75, 0.75);
-			}
-			case(3):
-			{
-				m_myRobot.tankDrive(m_leftStick.getY(), m_rightStick.getY());
-				if (m_rightStick.getTrigger() == true)
-					m_arm.set(0.7);
-			}
-		}
-		}
-		*/
 			
-	
+		/*
+		if (m_controller.getTriggerAxis(Hand.kLeft)>=0.1)
+			m_myRobot.tankDrive(m_controller.getY(Hand.kLeft), m_controller.getY(Hand.kRight));
 		m_myRobot.tankDrive(m_controller.getY(Hand.kRight), m_controller.getY(Hand.kLeft)); //Use this when using one controller
 		//System.out.println(m_controller.getY(Hand.kRight));
 		//m_myRobot.tankDrive(m_leftStick.getY(), m_rightStick.getY()); //Use this when using TWO joysticks
@@ -203,14 +157,14 @@ public class Robot extends IterativeRobot {
 		if (m_controller.getPOV()==270)
 			m_myRobot.tankDrive(1, -1);
 		if (m_controller.getBumperPressed(Hand.kLeft) == true)
-			m_arm.set(0.2);
+			m_arm.set(0.4);
 		if (m_controller.getBumperReleased(Hand.kLeft) == true)
 			m_arm.set(0);
 		if (m_controller.getBumperPressed(Hand.kRight) == true)
-			m_arm.set(-0.2);
+			m_arm.set(-0.4);
 		if (m_controller.getBumperReleased(Hand.kRight) == true)
 			m_arm.set(0);
 		m_frontLeft.set(m_controller.getRawAxis(3));
-		
+		*/
 	}
 }
