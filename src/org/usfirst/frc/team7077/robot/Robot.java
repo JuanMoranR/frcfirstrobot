@@ -129,11 +129,11 @@ public class Robot extends IterativeRobot {
 				if (m_controller.getPOV()==270)
 					m_myRobot.tankDrive(1, -1);
 				if (m_controller.getBumperPressed(Hand.kLeft) == true)
-					m_arm.set(0.9);
+					m_arm.set(1);
 				if (m_controller.getBumperReleased(Hand.kLeft) == true)
 					m_arm.set(0);
 				if (m_controller.getBumperPressed(Hand.kRight) == true)
-					m_arm.set(-0.4);
+					m_arm.set(-1);
 				if (m_controller.getBumperReleased(Hand.kRight) == true)
 					m_arm.set(0);
 				m_frontLeft.set(m_controller.getRawAxis(3));
