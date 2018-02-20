@@ -142,9 +142,9 @@ public class Robot extends IterativeRobot {
 		/*
 			default:
 				System.out.println("Somethings wrong, speed variable isnt set");
-		*/
+		
 		}
-			
+		*/	
 		/*
 		if (m_controller.getTriggerAxis(Hand.kLeft)>=0.1)
 			m_myRobot.tankDrive(m_controller.getY(Hand.kLeft), m_controller.getY(Hand.kRight));
