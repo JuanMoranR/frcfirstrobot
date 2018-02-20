@@ -28,12 +28,13 @@ public class Robot extends IterativeRobot {
 	private static final int kMotorPortLeft = 0; //Change this to whatever the left motor port is on
 	private static final int kMotorPortRight = 1; //Change this to whatever the right motor port is on
 	
-	//Talons for intake wheels
+	//Talon for arm
 	Talon m_arm = new Talon(2);
+	//Talons for intake wheels
 	Talon m_frontLeft = new Talon(3);
 	Talon m_frontRight = new Talon(4);
 			
-	DifferentialDrive m_drive = new DifferentialDrive(m_frontLeft, m_frontRight);
+	DifferentialDrive m_intake = new DifferentialDrive(m_frontLeft, m_frontRight);
 	
 	private static final int kJoystickPortLeft = 0; //Change this to whatever the left joystick port is on
 	private static final int kJoystickPortRight = 1; //Change this to whatever the right joystick port is on
@@ -50,7 +51,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopPeriodic() {
-		
+		/*
 		int speed = 3;
 		if (m_controller.getXButton() == true)
 			speed = 0;
@@ -60,9 +61,7 @@ public class Robot extends IterativeRobot {
 			speed = 2;
 		if (m_controller.getAButton() == true)
 			speed = 3;
-		
-		if (controllerType == 0)
-		{	
+	
 		switch(speed)
 		{
 			case 0:
@@ -117,8 +116,11 @@ public class Robot extends IterativeRobot {
 				if (m_controller.getY(Hand.kLeft) == -1 && m_controller.getY(Hand.kRight) == -1)
 					m_myRobot.tankDrive(0.75, 0.75);
 			case 3:
+			*/
 				if (m_controller.getTriggerAxis(Hand.kLeft)>=0.1)
-					m_myRobot.tankDrive(m_controller.getY(Hand.kLeft), m_controller.getY(Hand.kRight));
+					m_intake.tankDrive(-1, -1));
+				if (m_controller.getTriggerAxis(Hand.kRight)>=0.1)
+					m_intake.tankDrive(1, 1));
 				m_myRobot.tankDrive(m_controller.getY(Hand.kRight), m_controller.getY(Hand.kLeft));
 				if (m_controller.getPOV()==0)
 					m_myRobot.tankDrive(-1,-1);
@@ -137,9 +139,10 @@ public class Robot extends IterativeRobot {
 				if (m_controller.getBumperReleased(Hand.kRight) == true)
 					m_arm.set(0);
 				m_frontLeft.set(m_controller.getRawAxis(3));
+		/*
 			default:
 				System.out.println("Somethings wrong, speed variable isnt set");
-		}
+		*/
 		}
 			
 		/*
