@@ -30,11 +30,8 @@ public class Robot extends IterativeRobot {
 	
 	//Talon for arm
 	Talon m_arm = new Talon(2);
-	//Talons for intake wheels
-	Talon m_frontLeft = new Talon(3);
-	Talon m_frontRight = new Talon(4);
-			
-	DifferentialDrive m_intake = new DifferentialDrive(m_frontLeft, m_frontRight);
+	//Talon for intake wheels
+	Talon m_intake = new Talon(3);
 	
 	private static final int kJoystickPortLeft = 0; //Change this to whatever the left joystick port is on
 	private static final int kJoystickPortRight = 1; //Change this to whatever the right joystick port is on
@@ -117,11 +114,11 @@ public class Robot extends IterativeRobot {
 					m_myRobot.tankDrive(0.75, 0.75);
 			case 3:
 			*/
-				if (m_controller.getTriggerAxis(Hand.kLeft)>=0.1)
-					m_intake.tankDrive(-1, -1));
-				if (m_controller.getTriggerAxis(Hand.kRight)>=0.1)
-					m_intake.tankDrive(1, 1));
 				m_myRobot.tankDrive(m_controller.getY(Hand.kRight), m_controller.getY(Hand.kLeft));
+				if (m_controller.getTriggerAxis(Hand.kLeft)>=0.2)
+					m_intake.set(-1);
+				if (m_controller.getTriggerAxis(Hand.kRight)>=0.2)
+					m_intake.set(1);
 				if (m_controller.getPOV()==0)
 					m_myRobot.tankDrive(-1,-1);
 				if (m_controller.getPOV()==180)
@@ -131,14 +128,13 @@ public class Robot extends IterativeRobot {
 				if (m_controller.getPOV()==270)
 					m_myRobot.tankDrive(1, -1);
 				if (m_controller.getBumperPressed(Hand.kLeft) == true)
-					m_arm.set(1);
+					m_arm.set(-0.4);
 				if (m_controller.getBumperReleased(Hand.kLeft) == true)
 					m_arm.set(0);
 				if (m_controller.getBumperPressed(Hand.kRight) == true)
-					m_arm.set(-1);
+					m_arm.set(1);
 				if (m_controller.getBumperReleased(Hand.kRight) == true)
 					m_arm.set(0);
-				m_frontLeft.set(m_controller.getRawAxis(3));
 		/*
 			default:
 				System.out.println("Somethings wrong, speed variable isnt set");
