@@ -9,7 +9,7 @@ package org.usfirst.frc.team7077.robot;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick;
+//import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.XboxController;
@@ -19,10 +19,10 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class Robot extends IterativeRobot {
 	
-	private static final int controllerType = 0; //0 for Logitech controller, 1 for joysticks
+	//private static final int controllerType = 0; //0 for Logitech controller, 1 for joysticks
 	private DifferentialDrive m_myRobot;
-	private Joystick m_leftStick;
-	private Joystick m_rightStick;
+	//private Joystick m_leftStick;
+	//private Joystick m_rightStick;
 	private XboxController m_controller;
 	
 	private static final int kMotorPortLeft = 0; //Change this to whatever the left motor port is on
@@ -33,8 +33,8 @@ public class Robot extends IterativeRobot {
 	//Talon for intake wheels
 	Talon m_intake = new Talon(3);
 	
-	private static final int kJoystickPortLeft = 0; //Change this to whatever the left joystick port is on
-	private static final int kJoystickPortRight = 1; //Change this to whatever the right joystick port is on
+	//private static final int kJoystickPortLeft = 0; //Change this to whatever the left joystick port is on
+	//private static final int kJoystickPortRight = 1; //Change this to whatever the right joystick port is on
 	private static final int kControllerPort = 0; //Change this to whatever the ONE controller port is on
 	
 	
@@ -115,10 +115,15 @@ public class Robot extends IterativeRobot {
 			case 3:
 			*/
 				m_myRobot.tankDrive(m_controller.getY(Hand.kRight), m_controller.getY(Hand.kLeft));
-				if (m_controller.getTriggerAxis(Hand.kLeft)>=0.2)
+				if (m_controller.getYButtonPressed()==true)
 					m_intake.set(-1);
-				if (m_controller.getTriggerAxis(Hand.kRight)>=0.2)
+				if (m_controller.getYButtonReleased()==true)
+					m_intake.set(0);
+				if (m_controller.getAButtonPressed()==true)
 					m_intake.set(1);
+				if (m_controller.getAButtonReleased()==true)
+					m_intake.set(0);
+				System.out.println(m_intake);
 				if (m_controller.getPOV()==0)
 					m_myRobot.tankDrive(-1,-1);
 				if (m_controller.getPOV()==180)
@@ -135,6 +140,7 @@ public class Robot extends IterativeRobot {
 					m_arm.set(1);
 				if (m_controller.getBumperReleased(Hand.kRight) == true)
 					m_arm.set(0);
+				
 		/*
 			default:
 				System.out.println("Somethings wrong, speed variable isnt set");
