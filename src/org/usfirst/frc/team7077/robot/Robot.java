@@ -9,7 +9,7 @@ package org.usfirst.frc.team7077.robot;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.IterativeRobot;
-//import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.XboxController;
@@ -21,8 +21,8 @@ public class Robot extends IterativeRobot {
 	
 	//private static final int controllerType = 0; //0 for Logitech controller, 1 for joysticks
 	private DifferentialDrive m_myRobot;
-	//private Joystick m_leftStick;
-	//private Joystick m_rightStick;
+	private Joystick m_leftStick;
+	private Joystick m_rightStick;
 	private XboxController m_controller;
 	
 	private static final int kMotorPortLeft = 0; //Change this to whatever the left motor port is on
@@ -33,8 +33,8 @@ public class Robot extends IterativeRobot {
 	//Talon for intake wheels
 	Talon m_intake = new Talon(3);
 	
-	//private static final int kJoystickPortLeft = 0; //Change this to whatever the left joystick port is on
-	//private static final int kJoystickPortRight = 1; //Change this to whatever the right joystick port is on
+	private static final int kJoystickPortLeft = 0; //Change this to whatever the left joystick port is on
+	private static final int kJoystickPortRight = 1; //Change this to whatever the right joystick port is on
 	private static final int kControllerPort = 0; //Change this to whatever the ONE controller port is on
 	
 	
@@ -42,78 +42,36 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		//Spark 0 and 1 are drive motors, 0 is 2 left side 1 is 2 right side.
 		m_myRobot = new DifferentialDrive(new Spark(kMotorPortLeft), new Spark(kMotorPortRight));
-		//m_leftStick = new Joystick(kJoystickPortLeft); //Use this and bottom when using TWO joysticks
-		//m_rightStick = new Joystick(kJoystickPortRight);
+		m_leftStick = new Joystick(kJoystickPortLeft); //Use this and bottom when using TWO joysticks
+		m_rightStick = new Joystick(kJoystickPortRight);
 		m_controller = new XboxController(kControllerPort); //Use this when using single controller
 	}
 
 	public void teleopPeriodic() {
+		
 		/*
-		int speed = 3;
-		if (m_controller.getXButton() == true)
-			speed = 0;
-		if (m_controller.getYButton() == true)
-			speed = 1;
-		if (m_controller.getBButton() == true)
-			speed = 2;
-		if (m_controller.getAButton() == true)
-			speed = 3;
-	
-		switch(speed)
-		{
-			case 0:
-				if (m_controller.getPOV()==0)
-					m_myRobot.tankDrive(-0.25,-0.25);
-				if (m_controller.getPOV()==180)
-					m_myRobot.tankDrive(0.25, 0.25);
-				if (m_controller.getY(Hand.kLeft) >= 0.5)
-					m_myRobot.tankDrive(-0.25, 0);
-				if (m_controller.getY(Hand.kRight) >= 0.5)
-					m_myRobot.tankDrive(0, -0.25);
-				if (m_controller.getY(Hand.kLeft) >= 0.5 && m_controller.getY(Hand.kRight) >= 0.5)
-					m_myRobot.tankDrive(-0.25, -0.25);
-				if (m_controller.getY(Hand.kLeft) <= -0.5)
-					m_myRobot.tankDrive(0.25, 0);
-				if (m_controller.getY(Hand.kRight) <= -0.5)
-					m_myRobot.tankDrive(0, 0.25);
-				if (m_controller.getY(Hand.kLeft) <= -0.5 && m_controller.getY(Hand.kRight) <= -0.5)
-					m_myRobot.tankDrive(0.25, 0.25);
-			case 1:
-				if (m_controller.getPOV()==0)
-					m_myRobot.tankDrive(-0.5,-0.5);
-				if (m_controller.getPOV()==180)
-					m_myRobot.tankDrive(0.5, 0.5);
-				if (m_controller.getY(Hand.kLeft) >= 0.5)
-					m_myRobot.tankDrive(-0.5, 0);
-				if (m_controller.getY(Hand.kRight) >= 0.5)
-					m_myRobot.tankDrive(0, -0.5);
-				if (m_controller.getY(Hand.kLeft) >= 0.5 && m_controller.getY(Hand.kRight) >= 0.5)
-					m_myRobot.tankDrive(-0.5, -0.5);
-				if (m_controller.getY(Hand.kLeft) <= -0.5)
-					m_myRobot.tankDrive(0.5, 0);
-				if (m_controller.getY(Hand.kRight) <= -0.5)
-					m_myRobot.tankDrive(0, 0.5);
-				if (m_controller.getY(Hand.kLeft) <= -0.5 && m_controller.getY(Hand.kRight) <= -0.5)
-					m_myRobot.tankDrive(0.5, 0.5);
-			case 2:
-				if (m_controller.getPOV()==0)
-					m_myRobot.tankDrive(-0.75,-0.75);
-				if (m_controller.getPOV()==180)
-					m_myRobot.tankDrive(0.75, 0.75);
-				if (m_controller.getY(Hand.kLeft) >= 0.5)
-					m_myRobot.tankDrive(-0.75, 0);
-				if (m_controller.getY(Hand.kRight) >= 0.5)
-					m_myRobot.tankDrive(0, -0.75);
-				if (m_controller.getY(Hand.kLeft) >= 0.5 && m_controller.getY(Hand.kRight) == 1)
-					m_myRobot.tankDrive(-0.75, -0.75);
-				if (m_controller.getY(Hand.kLeft) == -1)
-					m_myRobot.tankDrive(0.75, 0);
-				if (m_controller.getY(Hand.kRight) == -1)
-					m_myRobot.tankDrive(0, 0.75);
-				if (m_controller.getY(Hand.kLeft) == -1 && m_controller.getY(Hand.kRight) == -1)
-					m_myRobot.tankDrive(0.75, 0.75);
-			case 3:
-			*/
+		m_myRobot.tankDrive(m_leftStick.getY(), m_rightStick.getY()); //Use this when using TWO joysticks
+		if (m_rightStick.getRawButtonPressed(2)==true)
+			m_arm.set(-0.4);
+		if (m_rightStick.getRawButtonReleased(2)==true)
+			m_arm.set(0);
+		if (m_rightStick.getRawButtonPressed(3)==true)
+			m_arm.set(1);
+		if (m_rightStick.getRawButtonReleased(3)==true)
+			m_arm.set(0);
+			
+		m_intake.set(m_rightStick.getZ());
+			
+		if (m_rightStick.getPOV()==0)
+			m_myRobot.tankDrive(-1,-1);
+		if (m_rightStick.getPOV()==180)
+			m_myRobot.tankDrive(1, 1);
+		if (m_rightStick.getPOV()==90)
+			m_myRobot.tankDrive(-1, 1);
+		if (m_rightStick.getPOV()==270)
+			m_myRobot.tankDrive(1, -1);
+		*/
+		
 				m_myRobot.tankDrive(m_controller.getY(Hand.kRight), m_controller.getY(Hand.kLeft));
 				if (m_controller.getYButtonPressed()==true)
 					m_intake.set(-1);
@@ -136,8 +94,8 @@ public class Robot extends IterativeRobot {
 					m_arm.set(-0.4);
 				if (m_controller.getBumperReleased(Hand.kLeft) == true)
 					m_arm.set(0);
-				if (m_controller.getBumperPressed(Hand.kRight) == true)
-					m_arm.set(1);
+ 				if (m_controller.getBumperPressed(Hand.kRight) == true)
+					m_arm.set(100);
 				if (m_controller.getBumperReleased(Hand.kRight) == true)
 					m_arm.set(0);
 				
