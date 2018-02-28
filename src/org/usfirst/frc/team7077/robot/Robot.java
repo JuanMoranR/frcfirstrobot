@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team7077.robot;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
@@ -19,11 +20,11 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class Robot extends IterativeRobot {
 	
-	//private static final int controllerType = 0; //0 for Logitech controller, 1 for joysticks
 	private DifferentialDrive m_myRobot;
 	private Joystick m_leftStick;
 	private Joystick m_rightStick;
-	private XboxController m_controller;
+	//private XboxController m_controller;
+	private XboxController m_ps4;
 	
 	private static final int kMotorPortLeft = 0; //Change this to whatever the left motor port is on
 	private static final int kMotorPortRight = 1; //Change this to whatever the right motor port is on
@@ -35,76 +36,42 @@ public class Robot extends IterativeRobot {
 	
 	private static final int kJoystickPortLeft = 0; //Change this to whatever the left joystick port is on
 	private static final int kJoystickPortRight = 1; //Change this to whatever the right joystick port is on
-	private static final int kControllerPort = 0; //Change this to whatever the ONE controller port is on
+	//private static final int kControllerPort = 5; //Change this to whatever the ONE controller port is on
+	private static final int kPS4Port = 2;
 	
 	
 
 	public void robotInit() {
 		//Spark 0 and 1 are drive motors, 0 is 2 left side 1 is 2 right side.
 		m_myRobot = new DifferentialDrive(new Spark(kMotorPortLeft), new Spark(kMotorPortRight));
-		m_leftStick = new Joystick(kJoystickPortLeft); //Use this and bottom when using TWO joysticks
-		m_rightStick = new Joystick(kJoystickPortRight);
-		m_controller = new XboxController(kControllerPort); //Use this when using single controller
+		//Old JoyStick Code
+		//m_leftStick = new Joystick(kJoystickPortLeft); //Use this and bottom when using TWO joysticks
+		//m_rightStick = new Joystick(kJoystickPortRight);
+		//Code from SunRise
+		Joystick leftDrive = new Joystick(0);	// set ID 1 in DriverStation
+		Joystick rightDrive = new Joystick(1);	// set ID 2 in DriverStation 
+		
+		m_ps4 = new XboxController(kPS4Port);
+		//m_controller = new XboxController(kControllerPort); //Use this when using single controller
 	}
 
 	public void teleopPeriodic() {
+		//double fvalue = leftDrive.getRawAxis(3);
+		//double bValue = -1* leftDrive.getRawAxis
 		
-		/*
-		m_myRobot.tankDrive(m_leftStick.getY(), m_rightStick.getY()); //Use this when using TWO joysticks
-		if (m_rightStick.getRawButtonPressed(2)==true)
-			m_arm.set(-0.4);
-		if (m_rightStick.getRawButtonReleased(2)==true)
-			m_arm.set(0);
-		if (m_rightStick.getRawButtonPressed(3)==true)
-			m_arm.set(1);
-		if (m_rightStick.getRawButtonReleased(3)==true)
-			m_arm.set(0);
-			
-		m_intake.set(m_rightStick.getZ());
-			
-		if (m_rightStick.getPOV()==0)
+		//PS4 Controller
+		if (m_ps4.getPOV()==0)
 			m_myRobot.tankDrive(-1,-1);
-		if (m_rightStick.getPOV()==180)
-			m_myRobot.tankDrive(1, 1);
-		if (m_rightStick.getPOV()==90)
+		if (m_ps4.getPOV()==90)
 			m_myRobot.tankDrive(-1, 1);
-		if (m_rightStick.getPOV()==270)
+		if (m_ps4.getPOV()==180)
+			m_myRobot.tankDrive(1, 1);
+		if (m_ps4.getPOV()==270)
 			m_myRobot.tankDrive(1, -1);
-		*/
+			
 		
-				m_myRobot.tankDrive(m_controller.getY(Hand.kRight), m_controller.getY(Hand.kLeft));
-				if (m_controller.getYButtonPressed()==true)
-					m_intake.set(-1);
-				if (m_controller.getYButtonReleased()==true)
-					m_intake.set(0);
-				if (m_controller.getAButtonPressed()==true)
-					m_intake.set(1);
-				if (m_controller.getAButtonReleased()==true)
-					m_intake.set(0);
-				System.out.println(m_intake);
-				if (m_controller.getPOV()==0)
-					m_myRobot.tankDrive(-1,-1);
-				if (m_controller.getPOV()==180)
-					m_myRobot.tankDrive(1, 1);
-				if (m_controller.getPOV()==90)
-					m_myRobot.tankDrive(-1, 1);
-				if (m_controller.getPOV()==270)
-					m_myRobot.tankDrive(1, -1);
-				if (m_controller.getBumperPressed(Hand.kLeft) == true)
-					m_arm.set(-0.4);
-				if (m_controller.getBumperReleased(Hand.kLeft) == true)
-					m_arm.set(0);
- 				if (m_controller.getBumperPressed(Hand.kRight) == true)
-					m_arm.set(100);
-				if (m_controller.getBumperReleased(Hand.kRight) == true)
-					m_arm.set(0);
-				
-		/*
-			default:
-				System.out.println("Somethings wrong, speed variable isnt set");
 		
-		}
-		*/	
+		//Joystick Controller 
 		/*
 		if (m_controller.getTriggerAxis(Hand.kLeft)>=0.1)
 			m_myRobot.tankDrive(m_controller.getY(Hand.kLeft), m_controller.getY(Hand.kRight));
@@ -129,5 +96,60 @@ public class Robot extends IterativeRobot {
 			m_arm.set(0);
 		m_frontLeft.set(m_controller.getRawAxis(3));
 		*/
+			
+			
+			
+			
+			
+//			m_myRobot.tankDrive(m_controller.getY(Hand.kRight), m_controller.getY(Hand.kLeft));
+					//	if (m_controller.getYButtonPressed()==true)
+					//		m_intake.set(-1);
+					//	if (m_controller.getYButtonReleased()==true)
+					//		m_intake.set(0);
+					//	if (m_controller.getAButtonPressed()==true)
+					//		m_intake.set(1);
+					//	if (m_controller.getAButtonReleased()==true)
+					//		m_intake.set(0);
+					//	System.out.println(m_intake);
+					//	if (m_controller.getPOV()==0)
+					//		m_myRobot.tankDrive(-1,-1);
+					//	if (m_controller.getPOV()==180)
+					//		m_myRobot.tankDrive(1, 1);
+					//	if (m_controller.getPOV()==90)
+					//		m_myRobot.tankDrive(-1, 1);
+					//	if (m_controller.getPOV()==270)
+					//		m_myRobot.tankDrive(1, -1);
+					//	if (m_controller.getBumperPressed(Hand.kLeft) == true)
+					//		m_arm.set(-0.4);
+					//	if (m_controller.getBumperReleased(Hand.kLeft) == true)
+					//		m_arm.set(0);
+		 			//	if (m_controller.getBumperPressed(Hand.kRight) == true)
+					//		m_arm.set(100);
+					//	if (m_controller.getBumperReleased(Hand.kRight) == true)
+					//		m_arm.set(0);
+				
+			/*
+			m_myRobot.tankDrive(m_leftStick.getY(), m_rightStick.getY()); //Use this when using TWO joysticks
+			if (m_rightStick.getRawButtonPressed(3)==true)
+				m_arm.set(-0.4);
+			if (m_rightStick.getRawButtonReleased(3)==true)
+				m_arm.set(0);
+			if (m_rightStick.getRawButtonPressed(4)==true)
+				m_arm.set(1);
+			if (m_rightStick.getRawButtonReleased(4)==true)
+				m_arm.set(0);
+				
+			m_intake.set(m_rightStick.getZ());
+				
+			if (m_rightStick.getPOV()==0)
+				m_myRobot.tankDrive(-1,-1);
+			if (m_rightStick.getPOV()==180)
+				m_myRobot.tankDrive(1, 1);
+			if (m_rightStick.getPOV()==90)
+				m_myRobot.tankDrive(-1, 1);
+			if (m_rightStick.getPOV()==270)
+			m_myRobot.tankDrive(1, -1);
+			
+			*/
 	}
 }
