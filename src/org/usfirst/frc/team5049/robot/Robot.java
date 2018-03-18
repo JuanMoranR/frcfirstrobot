@@ -7,6 +7,9 @@
 
 package org.usfirst.frc.team5049.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Spark;
@@ -28,7 +31,7 @@ public class Robot extends IterativeRobot {
 	private static final int kMotorPortRight = 1; //Change this to whatever the right motor port is on
 	
 	//Talon for arm
-	Talon m_arm = new Talon(2); //Port # on the RoboRio
+	TalonSRX m_arm = new TalonSRX(2); //Port # on the RoboRio
 	//Talon for intake wheels
 	Talon m_Lintake = new Talon(3);
 	Talon m_Rintake = new Talon(4);
@@ -51,14 +54,17 @@ public class Robot extends IterativeRobot {
 		timer = new Timer();
 	}
 	
+
 	@Override
 	public void autonomousInit() {
 		m_myRobot.setSafetyEnabled(false);
 		m_leftDrive.setSafetyEnabled(false);
 		m_rightDrive.setSafetyEnabled(false);
-		
+
 		timer.reset();
 		timer.start();
+	
+		
 	}
 
 	/**
@@ -66,22 +72,14 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		if (timer.get()<=0.35) {
-			m_myRobot.tankDrive(0.25, -0.25);
+		if (timer.get()<=2) {
+			m_myRobot.tankDrive(-0.675, -0.675);
 		}
-		//if (timer.get()>0.36 && timer.get()<=.50) {
-		//	m_myRobot.tankDrive(0.50, 0.50);
-		//	}
-		//}
-		//else if (timer.get()>0.35 &&  timer.get()<1.0) {
-		//	m_myRobot.tankDrive(-0.75, -0.75);
-		//}
+		
 		else {
 			m_myRobot.tankDrive(0, 0);
 		}
 		Timer.delay(0.005);
-		System.out.println(timer.get());
-		
 	}
 
 	@Override
@@ -92,17 +90,27 @@ public class Robot extends IterativeRobot {
 		
 		m_myRobot.tankDrive(m_controller.getY(Hand.kRight), m_controller.getY(Hand.kLeft));
 		if (m_controller.getYButtonPressed()==true)
+		{	
 			m_Lintake.set(-1);
-			m_Rintake.set(-1);
-		if (m_controller.getYButtonReleased()==true)
-			m_Lintake.set(0);
-			m_Rintake.set(0);
-		if (m_controller.getAButtonPressed()==true)
-			m_Lintake.set(1);
 			m_Rintake.set(1);
-		if (m_controller.getAButtonReleased()==true)
+		}	
+		if (m_controller.getYButtonReleased()==true)
+		{
 			m_Lintake.set(0);
 			m_Rintake.set(0);
+		}	
+		if (m_controller.getAButtonPressed()==true)
+		{
+		
+			m_Lintake.set(1);
+			m_Rintake.set(-1);
+		}
+		if (m_controller.getAButtonReleased()==true)
+		{	
+			m_Lintake.set(0);
+			m_Rintake.set(0);
+		}	
+		
 		if (m_controller.getPOV()==0)
 			m_myRobot.tankDrive(-1,-1);
 		if (m_controller.getPOV()==180)
@@ -111,14 +119,15 @@ public class Robot extends IterativeRobot {
 			m_myRobot.tankDrive(-1, 1);
 		if (m_controller.getPOV()==270)
 			m_myRobot.tankDrive(1, -1);
+		
 		if (m_controller.getBumperPressed(Hand.kLeft) == true)
-			m_arm.set(-0.4);
+			m_arm.set(ControlMode.PercentOutput, -0.4);
 		if (m_controller.getBumperReleased(Hand.kLeft) == true)
-			m_arm.set(0);
+			m_arm.set(ControlMode.PercentOutput, 0);
 		if (m_controller.getBumperPressed(Hand.kRight) == true)
-			m_arm.set(1);
+			m_arm.set(ControlMode.PercentOutput, 1);
 		if (m_controller.getBumperReleased(Hand.kRight) == true)
-			m_arm.set(0);
+			m_arm.set(ControlMode.PercentOutput, 0);
 		
 		Timer.delay(0.005); // wait for a motor update time
 	}
